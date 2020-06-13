@@ -1,11 +1,21 @@
 package com.test;
 
 import com.hua.LR0table;
+import com.hua.Parser;
+import com.together.Grammar;
 
 public class ParserTest {
 
+    /**
+     * 测试LR分析表程序,以ppt112页为例子
+     * @param args
+     */
     public static void main(String[] args) {
-        LR0table table=new LR0table();
+        //LR分析表第一行
+        char[] row=new char[]{'i', '+', '*', '（', '）', '#', 'E', 'T', 'F'};
+        int[] status=new int[12];//状态
+        for(int i=0;i<status.length;i++)
+            status[i]=i;
         //LR分析表测试
         String[][] t=new String[12][];
         t[0]=new String[]{"S5",   "",     "",     "S4",     "",     "",     "1",     "2",     "3",};
@@ -20,6 +30,11 @@ public class ParserTest {
         t[9]=new String[]{"",   "R1",     "S7",     "",     "R1",     "R1",     "",     "",     "",};
         t[10]=new String[]{"",   "R3",     "R3",     "",     "R3",     "R3",     "",     "",     "",};
         t[11]=new String[]{"",   "R5",     "R5",     "",     "R5",     "R5",     "",     "",     "",};
-        table.setTables(t);
+        String[] prodcutions=new String[]{"E->E+T","E->T","T->T*F","T->F","F->(E)","F->i"};
+        Grammar grammar=new Grammar(new char[]{'i', '+', '*', '（', '）'}, new char[]{'E', 'T', 'F'}, prodcutions);//输入的文法
+        LR0table table=new LR0table(row,status,t,grammar);
+
+        //分析
+        new Parser().parse(table, "i+i*i#");
     }
 }

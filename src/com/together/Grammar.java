@@ -25,4 +25,30 @@ public class Grammar {
         this.vn = vn;
         this.production = production;
     }
+
+    /*以下为get和set方法*/
+
+    public char[] getVt() {
+        return vt;
+    }
+
+    public void setVt(char[] vt) {
+        this.vt = vt;
+    }
+
+    public char[] getVn() {
+        return vn;
+    }
+
+    public void setVn(char[] vn) {
+        this.vn = vn;
+    }
+
+    public String[] getProduction() {
+        return production;
+    }
+
+    public void setProduction(String[] production) {
+        this.production = production;
+    }
 }
