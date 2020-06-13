@@ -30,7 +30,7 @@ public class Utils {
     }
 
     public static void main(String[] args) {
-        List<String> list = Utils.splitByChar("E->ab|k|c", '|');
+        List<String> list = Utils.splitByChar("E->ab", '|');
         System.out.println(list.size());
         for (String s:list
              ) {
