@@ -1,5 +1,6 @@
 package com.hua;
 
+import com.bin.LR0Pretreat;
 import com.together.Grammar;
 
 public class LR0table {
@@ -49,10 +50,39 @@ public class LR0table {
         return production.substring(indexOfRight).toCharArray();
     }
 
-    public LR0table(char[] row, int[] status, String[][] tables, Grammar grammar) {
-        this.row = row;
-        this.status = status;
-        this.tables = tables;
+    /**
+     * 显示LR分析表
+     */
+    public void showTable(){
+        System.out.println("------------------LR0分析表------------------");
+        System.out.print("\t");
+        for (char c:row)
+            System.out.print(c+"\t");
+        System.out.println();
+        for (int i=0;i<status.length;i++){
+            System.out.print(i+"\t");
+            for(int j=0;j<row.length;j++){
+                System.out.print(tables[i][j]+"\t");
+            }
+            System.out.println();
+        }
+    }
+
+
+
+    public LR0table(LR0Pretreat pretreat, Grammar grammar) {
+        //获得分析表的第一行,包括了#
+        char[] rows= GrammarToTableUtils.changeSymbol(grammar);
+        //获得分析表的第一列
+        int[] cols=GrammarToTableUtils.listToArray(pretreat.getStatus());
+        //获得分析表的内容
+        String[][] t = GrammarToTableUtils.preTreatToTable(pretreat,grammar,rows);
+        //完整的分析表
+        grammar.setProduction(pretreat.geteFormula().toArray(new String[pretreat.geteFormula().size()]));//将文法的产生式改成拓广文法
+
+        this.row = rows;
+        this.status = cols;
+        this.tables = t;
         this.grammar = grammar;
     }
 

@@ -40,6 +40,7 @@ public class GrammarToTableUtils {
         for (int row:pretreat.getStatus()){
             result[row]=new String[firstRow.length];//创建
             for(int i=0;i<firstRow.length;i++){
+                result[row][i]="";
                 char c=firstRow[i];
                 int status = pretreat.nextStatus(row, c);
                 //可以跳转
@@ -69,7 +70,7 @@ public class GrammarToTableUtils {
                         int index=0;
                         for(String prod:extendGrammar){
                             if (prod.equals(production.substring(0,length-1))){
-                                result[row][i]="R"+index;
+                                result[row][i]="R"+(index+1);
                                 break;
                             }
                             index++;

@@ -22,7 +22,7 @@ public class Parser {
         int indexOfC=0;//下标
         int status;//状态栈的栈顶元素
         String info;//LR分析表中的信息
-
+        show(index,input);//显示
         c=input.charAt(index++);//当前index指向的字符c
         indexOfC=table.indexOfFirstRow(c);//c对应table中的下标
         while(true){
@@ -49,6 +49,7 @@ public class Parser {
                 statusStack.add(nextStatus);//状态入栈
                 symbolStack.add(c);//符号进栈
                 System.out.println("ACTION["+status+","+c+"]="+info+",即状态"+nextStatus+"进栈");
+                show(index,input);//显示
                 c=input.charAt(index++);//当前index指向的字符c
                 indexOfC=table.indexOfFirstRow(c);//c对应table中的下标
                 continue;
@@ -72,7 +73,7 @@ public class Parser {
                 String nextStatusString=table.getTables()[curStatus][rowIndex];
                 int nextStatus=Integer.valueOf(nextStatusString);//状态
                 System.out.println(info+":用"+leftProduction+"->"+rightProduction+"归约且GOTO（"+curStatus+","+leftProduction+")="+nextStatus+"入栈");
-
+                show(index,input);//显示
                 symbolStack.add(leftProduction);//符号栈进栈
                 statusStack.add(nextStatus);//状态进栈
                 continue;
@@ -93,6 +94,22 @@ public class Parser {
         //初始化符号栈
         symbolStack=new LinkedList<>();
         symbolStack.add('#');
+    }
+
+    /**
+     * 显示栈
+     */
+    private void show(int index,String input){
+        int numOfTable=5;
+        System.out.print(statusStack);
+        for (int i=statusStack.toString().length()/4;i<numOfTable;i++)
+            System.out.print("\t");
+        System.out.print(symbolStack);
+        for (int i=symbolStack.toString().length()/4;i<numOfTable;i++)
+            System.out.print("\t");
+        System.out.print(input.substring(index));
+        for (int i=input.substring(index).length()/4;i<numOfTable;i++)
+            System.out.print("\t");
     }
 
 }
