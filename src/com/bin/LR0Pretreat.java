@@ -111,9 +111,7 @@ public class LR0Pretreat {
                     }
                 }
             }
-           // System.out.println(Vn[i] + "-->" + list);
             eGrammar.put(Vn[i], list);
-
         }
         this.eGrammar = eGrammar;
     }
@@ -136,7 +134,9 @@ public class LR0Pretreat {
             if(!isVt(c)){
                 List<String> firstP = firstProject(c);
                 for (String str:firstP) {
-                    e_closure.addAll(closure(str));
+                    if(!str.equals(project)){   //判断不是已经计算过的
+                        e_closure.addAll(closure(str));
+                    }
                 }
             }
         }
@@ -163,7 +163,10 @@ public class LR0Pretreat {
                 if(!isVt(c)){
                     //字符为非终结符时，将该非终结符的所有第一个项目的闭包集加入其中
                     List<String> firstP = firstProject(c);
-                    e_closure.addAll(e_closure(firstP));
+                    if(!projects.containsAll(firstP)){  //判断不是已经计算过的
+                        e_closure.addAll(e_closure(firstP));
+                    }
+
 
                 }
             }
@@ -180,6 +183,7 @@ public class LR0Pretreat {
     private List<String> firstProject(char c) {
         //获得非终结符的候选式
         List<String> list = eGrammar.get(c);
+        //System.out.println("list = "+ list);
         List<String> firstP = new ArrayList<>();
 
         //获得所有候选式的第一个项目
@@ -279,13 +283,8 @@ public class LR0Pretreat {
                     status.add(num);
                     statusSet.put(num++, set);
                 }
-
-                //System.out.println(c + "------>" + set);
             }
         }
-
-        //System.out.println("status = " + status);
-        //System.out.println("statusSet = " + statusSet);
     }
 
     /**
@@ -332,6 +331,52 @@ public class LR0Pretreat {
         return -1;  //不存在的返回-1
     }
 
+
+    public void showResult(){
+
+        System.out.print("          ");
+
+        for(int i = 0; i < Vt.length; i++){
+            System.out.print(Vt[i] + "         ");
+
+        }
+
+        for(int i = 0; i < Vn.length; i++){
+            System.out.print(Vn[i] + "         ");
+
+        }
+        System.out.println();
+
+        for (int i = 0; i < status.size(); i++){
+            System.out.print(status.get(i) + "         ");
+            for (int j = 0; j < Vt.length; j++){
+                int temp = nextStatus(status.get(i), Vt[j]);
+                if(temp == -1){
+                    System.out.print("          ");
+                }else if(temp > 9){
+                    System.out.print(temp + "        ");
+                }else{
+                    System.out.print(temp + "         ");
+                }
+
+                //System.out.print(nextStatus(status.get(i), Vt[j]) + "         ");
+            }
+            for (int j = 0; j < Vn.length; j++){
+                int temp = nextStatus(status.get(i), Vn[j]);
+                if(temp == -1){
+                    System.out.print("          ");
+                }else if(temp > 9){
+                    System.out.print(temp + "        ");
+                }else{
+                    System.out.print(temp + "         ");
+                }
+            }
+            System.out.println();
+        }
+
+    }
+
+
     /**
      * 获得拓广文法
      * @return
@@ -356,20 +401,4 @@ public class LR0Pretreat {
         return statusSet;
     }
 
-//    /**
-//     * 输出一下关系
-//     */
-//    public void showDFA(){
-//        for (int statu : status){
-//            for (char c : Vt){
-//                System.out.print(nextStatus(statusSet.get(statu), c) + "   ");
-//            }
-//
-//            for (char c : Vn){
-//                System.out.print(nextStatus(statusSet.get(statu), c) + "   ");
-//            }
-//
-//            System.out.println("\n");
-//        }
-//    }
 }
