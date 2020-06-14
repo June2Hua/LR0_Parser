@@ -30,11 +30,14 @@ public class ParserTest {
         t[9]=new String[]{"",   "R1",     "S7",     "",     "R1",     "R1",     "",     "",     "",};
         t[10]=new String[]{"",   "R3",     "R3",     "",     "R3",     "R3",     "",     "",     "",};
         t[11]=new String[]{"",   "R5",     "R5",     "",     "R5",     "R5",     "",     "",     "",};
+
+
+
         String[] prodcutions=new String[]{"E->E+T","E->T","T->T*F","T->F","F->(E)","F->i"};
         Grammar grammar=new Grammar(new char[]{'i', '+', '*', '（', '）'}, new char[]{'E', 'T', 'F'}, prodcutions);//输入的文法
-        LR0table table=new LR0table(row,status,t,grammar);
+//        LR0table table=new LR0table(row,status,t,grammar);
 
         //分析
-        new Parser().parse(table, "i+i*i#");
+//        new Parser().parse(table, "i+i*i#");
     }
 }

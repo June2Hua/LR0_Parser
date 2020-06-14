@@ -47,12 +47,12 @@ public class Test {
         pretreat.showResult();
 
         //测试下一状态转换
-//        System.out.println(pretreat.nextStatus(0, 'a'));
-//        System.out.println(pretreat.nextStatus(0, 'b'));
-//        System.out.println(pretreat.nextStatus(0, 'E'));
-//        System.out.println(pretreat.nextStatus(0, 'B'));
-//        System.out.println(pretreat.nextStatus(0, 'c'));
-//
-//        System.out.println(pretreat.nextStatus(1, 'b'));
+        System.out.println(pretreat.nextStatus(0, 'a'));
+        System.out.println(pretreat.nextStatus(0, 'b'));
+        System.out.println(pretreat.nextStatus(0, 'E'));
+        System.out.println(pretreat.nextStatus(0, 'B'));
+        System.out.println(pretreat.nextStatus(0, 'c'));
+
+        System.out.println(pretreat.nextStatus(1, 'b'));
     }
 }
